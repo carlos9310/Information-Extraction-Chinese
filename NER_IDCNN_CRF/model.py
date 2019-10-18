@@ -379,7 +379,7 @@ class Model(object):
         for batch in data_manager.iter_batch():
             strings = batch[0]
             tags = batch[-1]
-            lengths, scores = self.run_step(sess, False, batch)
+            lengths, scores, _ = self.run_step(sess, False, batch)
             batch_paths = self.decode(scores, lengths, trans)
             for i in range(len(strings)):
                 result = []
