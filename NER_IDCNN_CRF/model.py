@@ -338,13 +338,13 @@ class Model(object):
         """
         feed_dict = self.create_feed_dict(is_train, batch)
         if is_train:
-            global_step, loss, _ = sess.run(
-                [self.global_step, self.loss, self.train_op],
+            global_step, loss, _, seq_length = sess.run(
+                [self.global_step, self.loss, self.train_op, self.lengths],
                 feed_dict)
-            return global_step, loss
+            return global_step, loss, seq_length
         else:
             lengths, logits = sess.run([self.lengths, self.logits], feed_dict)
-            return lengths, logits
+            return lengths, logits, lengths
 
     def decode(self, logits, lengths, matrix):
         """
