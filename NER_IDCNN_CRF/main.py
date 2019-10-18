@@ -177,7 +177,8 @@ def train():
         loss = []
         for i in range(100):
             for batch in train_manager.iter_batch(shuffle=True):
-                step, batch_loss = model.run_step(sess, True, batch)
+                step, batch_loss, seq_length = model.run_step(sess, True, batch)
+                print(f'epoch:{i+1}, step:{step}, seq_length:{seq_length}')
                 loss.append(batch_loss)
                 if step % FLAGS.steps_check == 0:
                     iteration = step // steps_per_epoch + 1
