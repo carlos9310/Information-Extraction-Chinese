@@ -175,7 +175,7 @@ def train():
         model = create_model(sess, Model, FLAGS.ckpt_path, load_word2vec, config, id_to_char, logger)
         logger.info("start training")
         loss = []
-        for i in range(100):
+        for i in range(10):
             for batch in train_manager.iter_batch(shuffle=True):
                 step, batch_loss, seq_length = model.run_step(sess, True, batch)
                 print(f'epoch:{i+1}, step:{step}, seq_length:{seq_length}')

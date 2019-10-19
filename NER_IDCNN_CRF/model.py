@@ -294,12 +294,12 @@ class Model(object):
             small = -1000.0
             # pad logits for crf loss
             start_logits = tf.concat(
-                [small * tf.ones(shape=[self.batch_size, 1, self.num_tags]), tf.zeros(shape=[self.batch_size, 1, 1])], axis=-1)
+                [small * tf.ones(shape=[self.batch_size, 1, self.num_tags]), tf.zeros(shape=[self.batch_size, 1, 1])], axis=-1) # [batch_size, 1, num_tags + 1]
             pad_logits = tf.cast(small * tf.ones([self.batch_size, self.num_steps, 1]), tf.float32)
-            logits = tf.concat([project_logits, pad_logits], axis=-1)
-            logits = tf.concat([start_logits, logits], axis=1)
+            logits = tf.concat([project_logits, pad_logits], axis=-1)  # [batch_size, num_steps, num_tags + 1]
+            logits = tf.concat([start_logits, logits], axis=1)  # [batch_size, num_steps + 1, num_tags + 1]
             targets = tf.concat(
-                [tf.cast(self.num_tags*tf.ones([self.batch_size, 1]), tf.int32), self.targets], axis=-1)
+                [tf.cast(self.num_tags*tf.ones([self.batch_size, 1]), tf.int32), self.targets], axis=-1)  #  [batch_size, num_steps + 1]
 
             self.trans = tf.get_variable(
                 "transitions",
