@@ -16,13 +16,13 @@ def main(_):
     save_path = './model/'
 
     print('reading wordembedding')
-    wordembedding = np.load('./data/vec.npy')
+    wordembedding = np.load('./data/vec.npy', allow_pickle=True)
 
     print('reading training data')
-    train_y = np.load('./data/train_y.npy')
-    train_word = np.load('./data/train_word.npy')
-    train_pos1 = np.load('./data/train_pos1.npy')
-    train_pos2 = np.load('./data/train_pos2.npy')
+    train_y = np.load('./data/train_y.npy', allow_pickle=True)
+    train_word = np.load('./data/train_word.npy', allow_pickle=True)
+    train_pos1 = np.load('./data/train_pos1.npy', allow_pickle=True)
+    train_pos2 = np.load('./data/train_pos2.npy', allow_pickle=True)
 
     settings = network.Settings()
     settings.vocab_size = len(wordembedding)

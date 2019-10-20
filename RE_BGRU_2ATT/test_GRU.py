@@ -24,7 +24,7 @@ def pos_embed(x):
 def main_for_evaluation():
     pathname = "./model/ATT_GRU_model-"
 
-    wordembedding = np.load('./data/vec.npy')
+    wordembedding = np.load('./data/vec.npy', allow_pickle=True)
 
     test_settings = network.Settings()
     test_settings.vocab_size = 16693
@@ -93,10 +93,10 @@ def main_for_evaluation():
                 print(time_str)
                 print('Evaluating all test data and save data for PR curve')
 
-                test_y = np.load('./data/testall_y.npy')
-                test_word = np.load('./data/testall_word.npy')
-                test_pos1 = np.load('./data/testall_pos1.npy')
-                test_pos2 = np.load('./data/testall_pos2.npy')
+                test_y = np.load('./data/testall_y.npy', allow_pickle=True)
+                test_word = np.load('./data/testall_word.npy', allow_pickle=True)
+                test_pos1 = np.load('./data/testall_pos1.npy', allow_pickle=True)
+                test_pos2 = np.load('./data/testall_pos2.npy', allow_pickle=True)
                 allprob = []
                 acc = []
                 for i in range(int(len(test_word) / float(test_settings.big_num))):
@@ -116,7 +116,7 @@ def main_for_evaluation():
 
                 
                 np.save('./out/allprob_iter_' + str(current_step) + '.npy', allprob)
-                allans = np.load('./data/allans.npy')
+                allans = np.load('./data/allans.npy', allow_pickle=True)
 
                 # caculate the pr curve area
                 average_precision = average_precision_score(allans, allprob)
@@ -128,7 +128,7 @@ def main(_):
     #If you retrain the model, please remember to change the path to your own model below:
     pathname = "./model/ATT_GRU_model-9000"
     
-    wordembedding = np.load('./data/vec.npy')
+    wordembedding = np.load('./data/vec.npy', allow_pickle=True)
     test_settings = network.Settings()
     test_settings.vocab_size = 16693
     test_settings.num_classes = 12
